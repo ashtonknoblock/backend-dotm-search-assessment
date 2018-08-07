@@ -8,12 +8,12 @@ import glob
 import os 
 import sys
 import argparse
-cwd = os.getcwd()
+cwd = os.getcwd() + '/dotm_files/'
 
-def decode_files(text, path = cwd):
+def decode_files(text, pathway=cwd):
     matched = 0
     total = 0
-    for filename in glob.iglob('./dotm_files/*.dotm'):
+    for filename in glob.iglob(pathway + "/*dotm"):
         total += 1
         zf = zipfile.ZipFile(filename, 'r')
         data = zf.read('word/document.xml')
@@ -39,8 +39,8 @@ if __name__ == "__main__":
     text = sys.argv[1]
     if len(sys.argv) == 2:
         decode_files(text)
-    elif len(sys.argv) == 3:
-        new_path = sys.argv[2]
+    elif len(sys.argv) == 4 and sys.argv[2] == "--dir":
+        new_path = sys.argv[3]
         decode_files(text, new_path)  
     else:
         print 'ERROR: please type a valid command'
